@@ -1,5 +1,4 @@
 import mongoose from 'mongoose';
-
 export const connectVault = async () => {
     try {
         const conn = await mongoose.connect(process.env.DB_URI);
