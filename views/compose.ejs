@@ -1,0 +1,26 @@
+<%- include('layout-head') %>
+
+<h2><%= targetLog ? 'Update Tracked Log' : 'Drop a Fresh Thought' %></h2>
+
+<form action="/dashboard/<%= targetLog ? 'modify/' + targetLog._id + '?_method=PUT' : 'write' %>" method="POST" style="margin-top: 2rem;">
+    <label>Heading</label>
+    <input type="text" name="heading" required value="<%= targetLog ? targetLog.heading : '' %>" placeholder="Title your day...">
+
+    <label>Mood Vibration</label>
+    <select name="moodTag">
+        <option value="💡 Inspired" <%= targetLog && targetLog.moodTag === '💡 Inspired' ? 'selected' : '' %>>Inspired</option>
+        <option value="⏳ Productive" <%= targetLog && targetLog.moodTag === '⏳ Productive' ? 'selected' : '' %>>Productive</option>
+        <option value="☕ Chill" <%= targetLog && targetLog.moodTag === '☕ Chill' ? 'selected' : '' %>>Chill</option>
+        <option value="🌪️ Chaotic" <%= targetLog && targetLog.moodTag === '🌪️ Chaotic' ? 'selected' : '' %>>Chaotic</option>
+    </select>
+
+    <label>Body</label>
+    <textarea name="bodyText" rows="12" required placeholder="Write freely here..."><%= targetLog ? targetLog.bodyText : '' %></textarea>
+
+    <div style="margin-top: 1rem;">
+        <button type="submit"><%= targetLog ? 'Commit Updates' : 'Save To Vault' %></button>
+        <a href="/dashboard" style="margin-left: 1.5rem; color: var(--text-muted);">Back out</a>
+    </div>
+</form>
+
+<%- include('layout-foot') %>

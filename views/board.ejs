@@ -1,0 +1,41 @@
+<%- include('layout-head') %>
+
+<header>
+    <div>
+        <strong>@<%= user %></strong>
+    </div>
+    <form action="/gate/exit" method="POST" style="margin:0;">
+        <button type="submit" class="text-btn" style="color: var(--text-muted);">Disconnect</button>
+    </form>
+</header>
+
+<div style="margin-bottom: 2.5rem; display: flex; justify-content: space-between; align-items: center;">
+    <h3>Timeline Streams</h3>
+    <a href="/dashboard/write" style="background: var(--text-main); color: var(--bg-color); padding: 0.5rem 1rem; border-radius: 4px; font-weight: bold;">+ New Thought</a>
+</div>
+
+<% if (streams.length === 0) { %>
+    <p style="color: var(--text-muted); font-style: italic;">Vault is empty. Log something down.</p>
+<% } else { %>
+    <% streams.forEach(log => { %>
+        <div class="card">
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem;">
+                <h4 style="margin: 0;"><%= log.heading %></h4>
+                <span class="badge"><%= log.moodTag %></span>
+            </div>
+            <p style="white-space: pre-wrap; font-size: 0.95rem; line-height: 1.5; color: #cbd5e1;"><%= log.bodyText %></p>
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; font-size: 0.85rem; border-top: 1px solid #2a2a32; padding-top: 0.8rem;">
+                <span style="color: var(--text-muted);"><%= log.createdAt.toLocaleDateString() %></span>
+                <div>
+                    <a href="/dashboard/modify/<%= log._id %>" style="margin-right: 1rem;">Edit</a>
+                    <form action="/dashboard/purge/<%= log._id %>?_method=DELETE" method="POST" style="display: inline;" onsubmit="return confirm('Purge permanently?');">
+                        <button type="submit" class="text-btn">Purge</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    <% }) %>
+<% } %>
+
+<%- include('layout-foot') %>

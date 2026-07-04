@@ -1,0 +1,23 @@
+<%- include('layout-head') %>
+
+<h2 style="text-transform: capitalize;"><%= action %></h2>
+<% if (notice) { %> <p style="color: var(--danger);"><%= notice %></p> <% } %>
+
+<form action="/gate/<%= action %>" method="POST" style="margin-top: 1.5rem;">
+    <label>Alias</label>
+    <input type="text" name="alias" required placeholder="your nickname...">
+    
+    <label>Passcode</label>
+    <input type="password" name="passcode" required placeholder="••••••••">
+    
+    <button type="submit"><%= action === 'login' ? 'Enter Dashboard' : 'Create Profile' %></button>
+</form>
+
+<p style="margin-top: 2rem; font-size: 0.9rem;">
+    <%= action === 'login' ? "New here?" : "Already configured?" %> 
+    <a href="/gate/<%= action === 'login' ? 'signup' : 'login' %>">
+        <%= action === 'login' ? 'Register Account' : 'Sign In' %>
+    </a>
+</p>
+
+<%- include('layout-foot') %>
